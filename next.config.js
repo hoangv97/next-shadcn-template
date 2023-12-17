@@ -1,4 +1,15 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextPWA = require('next-pwa');
 
-module.exports = nextConfig
+const isProd = process.env.NODE_ENV === 'production';
+
+const withPWA = nextPWA({
+  dest: 'public',
+});
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  compress: isProd,
+  reactStrictMode: false,
+};
+
+module.exports = isProd ? withPWA(nextConfig) : nextConfig;
